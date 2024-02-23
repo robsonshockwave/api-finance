@@ -26,6 +26,18 @@ export async function transactionsRoutes(app: FastifyInstance) {
     };
   });
 
+  app.get('/summary', async (request, response) => {
+    const summary = await knex('transactions')
+      .sum('amount', {
+        as: 'amount',
+      })
+      .first();
+
+    return {
+      summary,
+    };
+  });
+
   app.post('/', async (request, response) => {
     //   const tables = await knex('sqlite_schema').select('*');
 
